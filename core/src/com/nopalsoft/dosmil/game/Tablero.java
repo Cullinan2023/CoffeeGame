@@ -110,7 +110,7 @@ public class Tablero extends Group {
 							i.remove();
 							removePieza(obj);
 							objNext.setValor(objNext.getValor() * 2);
-							score += objNext.getValor();
+							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -136,7 +136,7 @@ public class Tablero extends Group {
 							i.remove();
 							removePieza(obj);
 							objNext.setValor(objNext.getValor() * 2);
-							score += objNext.getValor();
+							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -162,7 +162,7 @@ public class Tablero extends Group {
 							i.remove();
 							removePieza(obj);
 							objNext.setValor(objNext.getValor() * 2);
-							score += objNext.getValor();
+							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -188,7 +188,7 @@ public class Tablero extends Group {
 							i.remove();
 							removePieza(obj);
 							objNext.setValor(objNext.getValor() * 2);
-							score += objNext.getValor();
+							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
