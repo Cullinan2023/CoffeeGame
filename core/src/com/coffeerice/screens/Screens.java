@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.screens;
+package com.coffeerice.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -16,10 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.nopalsoft.dosmil.Assets;
-import com.nopalsoft.dosmil.MainGame;
-import com.nopalsoft.dosmil.Settings;
-import com.nopalsoft.dosmil.game.GameScreen;
+import com.coffeerice.Assets;
+import com.coffeerice.MainGame;
+import com.coffeerice.game.GameScreen;
+import com.coffeerice.Settings;
 
 import java.util.Random;
 
@@ -73,7 +73,8 @@ public abstract class Screens extends InputAdapter implements Screen, GestureLis
 
     public void changeScreenWithFadeOut(final Class<?> newScreen, final MainGame game) {
         blackFadeOut = new Image(Assets.pixelNegro);
-        blackFadeOut.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        blackFadeOut.setSize(SCREEN_WIDTH , SCREEN_HEIGHT + 200);
+        blackFadeOut.setPosition(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f, 0);
         blackFadeOut.getColor().a = 0;
         blackFadeOut.addAction(Actions.sequence(Actions.fadeIn(.5f), Actions.run(new Runnable() {
             @Override
@@ -84,9 +85,6 @@ public abstract class Screens extends InputAdapter implements Screen, GestureLis
                     game.setScreen(new MainMenuScreen(game));
                 else if (newScreen == HelpScreen.class)
                     game.setScreen(new HelpScreen(game));
-
-                // El blackFadeOut se remueve del stage cuando se le da new Screens(game) "Revisar el constructor de la clase Screens" por lo que no hay necesidad de hacer
-                // blackFadeout.remove();
             }
         })));
         stage.addActor(blackFadeOut);

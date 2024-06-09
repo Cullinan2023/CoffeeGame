@@ -1,13 +1,11 @@
-package com.nopalsoft.dosmil;
+package com.coffeerice;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.nopalsoft.dosmil.handlers.GameServicesHandler;
-import com.nopalsoft.dosmil.handlers.RequestHandler;
-import com.nopalsoft.dosmil.screens.MainMenuScreen;
-import com.nopalsoft.dosmil.screens.Screens;
+import com.coffeerice.screens.MainMenuScreen;
+import com.coffeerice.screens.Screens;
 
 public class MainGame extends Game {
     

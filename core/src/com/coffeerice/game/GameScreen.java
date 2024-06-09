@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.game;
+package com.coffeerice.game;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.nopalsoft.dosmil.Assets;
-import com.nopalsoft.dosmil.MainGame;
-import com.nopalsoft.dosmil.Settings;
-import com.nopalsoft.dosmil.scene2d.GameOver;
-import com.nopalsoft.dosmil.scene2d.Paused;
-import com.nopalsoft.dosmil.screens.MainMenuScreen;
-import com.nopalsoft.dosmil.screens.Screens;
+import com.coffeerice.MainGame;
+import com.coffeerice.screens.MainMenuScreen;
+import com.coffeerice.Assets;
+import com.coffeerice.Settings;
+import com.coffeerice.scene2d.GameOver;
+import com.coffeerice.scene2d.Paused;
+import com.coffeerice.screens.Screens;
 
 public class GameScreen extends Screens {
     static final int STATE_READY = 0;
@@ -24,21 +24,21 @@ public class GameScreen extends Screens {
     static final int STATE_GAME_OVER = 3;
     public int state;
 
-    Tablero oTablero;
+    Board board;
 
     private Stage stageGame;
 
-    Table tbMarcadores;
-    Label lbTime, lbScore, lbBestScore;
+    Table tableMarker;
+    Label labelTime, labelScore, labelBestScore;
 
-    Button btPause;
-    Paused oPaused;
+    Button buttonPause;
+    Paused paused;
 
     public GameScreen(MainGame game) {
         super(game);
         stageGame = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-        oTablero = new Tablero();
-        stageGame.addActor(oTablero);
+        board = new Board();
+        stageGame.addActor(board);
 
         initUI();
 
@@ -47,33 +47,32 @@ public class GameScreen extends Screens {
     }
 
     private void initUI() {
-        tbMarcadores = new Table();
-        tbMarcadores.setSize(SCREEN_WIDTH, 100);
-        tbMarcadores.setPosition(0, 680);
-        // tbMarcadores.debug();
+        tableMarker = new Table();
+        tableMarker.setSize(SCREEN_WIDTH, 100);
+        tableMarker.setPosition(0, 680);
 
-        lbTime = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
-        lbTime.setAlignment(Align.center);
-        lbTime.setFontScale(1.15f);
+        labelTime = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
+        labelTime.setAlignment(Align.center);
+        labelTime.setFontScale(1.15f);
 
-        lbScore = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
-        lbScore.setFontScale(1.15f);
-        lbScore.setAlignment(Align.center);
+        labelScore = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
+        labelScore.setFontScale(1.15f);
+        labelScore.setAlignment(Align.center);
 
-        lbBestScore = new Label(Assets.idiomas.get("best") + "\n" + Settings.bestScore, Assets.labelStyleChico);
-        lbBestScore.setAlignment(Align.center);
-        lbBestScore.setFontScale(1.15f);
+        labelBestScore = new Label(Assets.idiomas.get("best") + "\n" + Settings.bestScore, Assets.labelStyleChico);
+        labelBestScore.setAlignment(Align.center);
+        labelBestScore.setFontScale(1.15f);
 
-        tbMarcadores.row().expand().uniform().center();
-        tbMarcadores.add(lbTime);
-        tbMarcadores.add(lbScore);
-        tbMarcadores.add(lbBestScore);
+        tableMarker.row().expand().uniform().center();
+        tableMarker.add(labelTime);
+        tableMarker.add(labelScore);
+        tableMarker.add(labelBestScore);
 
-        oPaused = new Paused(this);
+        paused = new Paused(this);
 
-        btPause = new Button(Assets.styleButtonPause);
-        btPause.setPosition(SCREEN_WIDTH / 2 - btPause.getWidth() / 2, 110);
-        btPause.addListener(new ClickListener() {
+        buttonPause = new Button(Assets.styleButtonPause);
+        buttonPause.setPosition(SCREEN_WIDTH / 2 - buttonPause.getWidth() / 2, 110);
+        buttonPause.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setPaused();
@@ -81,8 +80,8 @@ public class GameScreen extends Screens {
 
         });
 
-        stage.addActor(tbMarcadores);
-        stage.addActor(btPause);
+        stage.addActor(tableMarker);
+        stage.addActor(buttonPause);
 
     }
 
@@ -101,15 +100,15 @@ public class GameScreen extends Screens {
                 break;
         }
 
-        lbTime.setText(Assets.idiomas.get("time") + "\n" + ((int) oTablero.tiempo));
-        lbScore.setText(Assets.idiomas.get("score") + "\n" + (oTablero.score));
+        labelTime.setText(Assets.idiomas.get("time") + "\n" + ((int) board.tiempo));
+        labelScore.setText(Assets.idiomas.get("score") + "\n" + (board.score));
 
     }
 
     private void updateRunning(float delta) {
         stageGame.act(delta);
 
-        if (oTablero.state == Tablero.STATE_GAMEOVER) {
+        if (board.state == Board.STATE_GAMEOVER) {
             setGameover();
         }
     }
@@ -120,7 +119,6 @@ public class GameScreen extends Screens {
         batcher.begin();
         batcher.draw(Assets.fondo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         batcher.end();
-
         stageGame.draw();
 
     }
@@ -141,7 +139,7 @@ public class GameScreen extends Screens {
         if (state == STATE_GAME_OVER || state == STATE_PAUSED)
             return;
         state = STATE_PAUSED;
-        stage.addActor(oPaused);
+        stage.addActor(paused);
 
     }
 
@@ -153,8 +151,8 @@ public class GameScreen extends Screens {
 
     private void setGameover() {
         state = STATE_GAME_OVER;
-        Settings.setBestScores(oTablero.score);
-        GameOver oGameOver = new GameOver(this, oTablero.didWin, (int) oTablero.tiempo, oTablero.score);
+        Settings.setBestScores(board.score);
+        GameOver oGameOver = new GameOver(this, board.didWin, (int) board.tiempo, board.score);
         stage.addActor(oGameOver);
 
     }
@@ -165,55 +163,46 @@ public class GameScreen extends Screens {
             setRunning();
         return super.fling(velocityX, velocityY, button);
     }
-    /**
-     * Es muy imporante recordar que lo que se mueve es la pieza blanca por lo tanto si yo digo moveUp la pieza blanca se movera hacia arriba pero el usuario piensa que si hace un swipe down la pieza
-     * de arriba de la blanca es la que baja. Cuando nosotros sabemos que la que sube es la blanca.
-     */
 
     @Override
     public void up() {
-        oTablero.moveUp = true;
+        board.moveUp = true;
         super.up();
     }
 
     @Override
     public void down() {
-        oTablero.moveDown = true;
+        board.moveDown = true;
         super.down();
     }
 
     @Override
     public void right() {
-        oTablero.moveRight = true;
+        board.moveRight = true;
         super.right();
     }
 
     @Override
     public void left() {
-        oTablero.moveLeft = true;
+        board.moveLeft = true;
         super.left();
     }
-
-    /**
-     * Es muy imporante recordar que lo que se mueve es la pieza blanca por lo tanto si yo digo moveUp la pieza blanca se movera hacia arriba pero el usuario piensa que si hace un swipe down la pieza
-     * de arriba de la blanca es la que baja. Cuando nosotros sabemos que la que sube es la blanca.
-     */
+    
 
     @Override
     public boolean keyDown(int keycode) {
         if (state != STATE_PAUSED) {
             if (keycode == Keys.LEFT) {
-                oTablero.moveLeft = true;
+                board.moveLeft = true;
                 setRunning();
             } else if (keycode == Keys.RIGHT) {
-                oTablero.moveRight = true;
+                board.moveRight = true;
                 setRunning();
             } else if (keycode == Keys.UP) {
-                oTablero.moveUp = true;
+                board.moveUp = true;
                 setRunning();
             } else if (keycode == Keys.DOWN) {
-                oTablero.moveDown = true;
-
+                board.moveDown = true;
                 setRunning();
             }
         } else if (keycode == Keys.ESCAPE || keycode == Keys.BACK) {

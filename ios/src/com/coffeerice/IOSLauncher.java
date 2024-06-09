@@ -1,19 +1,16 @@
-package com.nopalsoft.dosmil;
+package com.coffeerice;
 
-import com.nopalsoft.dosmil.handlers.GameServicesHandler;
-import com.nopalsoft.dosmil.handlers.RequestHandler;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.nopalsoft.dosmil.MainGame;
 
-public class IOSLauncher extends IOSApplication.Delegate implements GameServicesHandler, RequestHandler {
+public class IOSLauncher extends IOSApplication.Delegate {
     @Override
     protected IOSApplication createApplication() {
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new MainGame(this, this), config);
+        return new IOSApplication(new MainGame(), config);
     }
 
     public static void main(String[] argv) {

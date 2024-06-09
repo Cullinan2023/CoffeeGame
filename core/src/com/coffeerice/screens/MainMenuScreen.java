@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.screens;
+package com.coffeerice.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -7,50 +7,54 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nopalsoft.dosmil.Assets;
-import com.nopalsoft.dosmil.MainGame;
-import com.nopalsoft.dosmil.Settings;
-import com.nopalsoft.dosmil.game.GameScreen;
+import com.badlogic.gdx.utils.Align;
+import com.coffeerice.Assets;
+import com.coffeerice.MainGame;
+import com.coffeerice.Settings;
+import com.coffeerice.game.GameScreen;
 
 public class MainMenuScreen extends Screens {
 
     Image imgTitle;
-
-    Label lbPlay;
-    Label lbHelp;
-    Label lbMore;
+    Image imgPlay;
+    Image imgHelp;
+    Image imgKTeam;
 
     Button btMusic;
     Button btSFX;
-    Button btFacebook;
 
     public MainMenuScreen(final MainGame game) {
         super(game);
         imgTitle = new Image(Assets.title);
-        imgTitle.setPosition(SCREEN_WIDTH / 2f - imgTitle.getWidth() / 2f, 580);
+        imgTitle.setPosition(SCREEN_WIDTH / 2f - imgTitle.getWidth() / 2f, 500);
 
-        lbPlay = new Label(Assets.idiomas.get("play"), Assets.labelStyleGrande);
-        lbPlay.setPosition(SCREEN_WIDTH / 2f - lbPlay.getWidth() / 2f, 350);
-        addEfectoPress(lbPlay);
-        lbPlay.addListener(new ClickListener() {
+        // Play
+        imgPlay = new Image(Assets.play);
+        imgPlay.setPosition(SCREEN_WIDTH / 2f - imgPlay.getWidth() / 2f, 350);
+        addEfectoPress(imgPlay);
+        imgPlay.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 changeScreenWithFadeOut(GameScreen.class, game);
             }
-
-            ;
         });
 
         // Help
-        lbHelp = new Label(Assets.idiomas.get("help"), Assets.labelStyleGrande);
-        lbHelp.setPosition(SCREEN_WIDTH / 2f - lbHelp.getWidth() / 2f, 250);
-        addEfectoPress(lbHelp);
-        lbHelp.addListener(new ClickListener() {
+        imgHelp = new Image(Assets.help);
+        imgHelp.setPosition(SCREEN_WIDTH / 2f - imgHelp.getWidth() / 2f, 250);
+        addEfectoPress(imgHelp);
+        imgHelp.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 changeScreenWithFadeOut(HelpScreen.class, game);
             }
 
             ;
         });
+        
+        // KTeam
+        imgKTeam = new Image(Assets.kTeam);
+        imgKTeam.setPosition((SCREEN_WIDTH / 2f - imgKTeam.getWidth() / 2f) + 50, 20);
+        imgKTeam.setScale(1.8f);
+        imgKTeam.setAlign(Align.right);
         
         btMusic = new Button(Assets.styleButtonMusic);
         btMusic.setPosition(5, 5);
@@ -81,8 +85,9 @@ public class MainMenuScreen extends Screens {
         
 
         stage.addActor(imgTitle);
-        stage.addActor(lbPlay);
-        stage.addActor(lbHelp);
+        stage.addActor(imgKTeam);
+        stage.addActor(imgPlay);
+        stage.addActor(imgHelp);
         stage.addActor(btMusic);
         stage.addActor(btSFX);
 

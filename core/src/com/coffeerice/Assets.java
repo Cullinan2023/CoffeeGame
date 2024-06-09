@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil;
+package com.coffeerice;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -27,7 +27,20 @@ public class Assets {
     public static AtlasRegion puzzleSolved;
 
     public static AtlasRegion title;
-
+    public static AtlasRegion play;
+    public static AtlasRegion help;
+    public static AtlasRegion kTeam;
+    
+    public static AtlasRegion pause;
+    public static AtlasRegion resume;
+    public static AtlasRegion mainMenu;
+    
+    public static AtlasRegion helpText1;
+    public static AtlasRegion helpText2;
+    
+    public static AtlasRegion gameOver;
+    public static AtlasRegion gameClear;
+    
     public static NinePatchDrawable pixelNegro;
     public static AtlasRegion fondoPuntuaciones;
 
@@ -67,7 +80,7 @@ public class Assets {
                 atlas.findRegion("font45"));
     }
 
-    private static void cargarEstilos() {
+    private static void loadStyle() {
         labelStyleChico = new LabelStyle(fontChico, Color.WHITE);
         labelStyleGrande = new LabelStyle(fontGrande, Color.WHITE);
 
@@ -98,7 +111,7 @@ public class Assets {
         atlas = new TextureAtlas(Gdx.files.internal("data/atlasMap.txt"));
 
         loadFont();
-        cargarEstilos();
+        loadStyle();
 
         if (MathUtils.randomBoolean())
             fondo = atlas.findRegion("fondo");
@@ -106,8 +119,21 @@ public class Assets {
             fondo = atlas.findRegion("fondo2");
         fondoTablero = atlas.findRegion("fondoPuntuaciones");
 
-        title = atlas.findRegion("titulo");
+        title = atlas.findRegion("title");
+        play = atlas.findRegion("play");
+        help = atlas.findRegion("help");
+        kTeam = atlas.findRegion("kTeam");
 
+        gameOver = atlas.findRegion("gameOver");
+        gameClear = atlas.findRegion("gameClear");
+        
+        pause = atlas.findRegion("pause");
+        resume = atlas.findRegion("resume");
+        mainMenu = atlas.findRegion("mainMenu");
+        
+        helpText1 = atlas.findRegion("helpText1");
+        helpText2 = atlas.findRegion("helpText2");
+        
         pixelNegro = new NinePatchDrawable(new NinePatch(
                 atlas.findRegion("pixelNegro"), 1, 1, 0, 0));
         fondoPuntuaciones = atlas.findRegion("fondoPuntuaciones");
@@ -138,7 +164,7 @@ public class Assets {
 
         Settings.load();
 
-        music2.setVolume(.1f);
+        music2.setVolume(0.4f);
 
         playMusic();
 
@@ -146,9 +172,11 @@ public class Assets {
     }
 
     public static void playMusic() {
-        if (Settings.isMusicOn)
-
+        if (Settings.isMusicOn) 
+        {
             music2.play();
+            music2.setLooping(true);
+        }
     }
 
     public static void pauseMusic() {

@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.objetos;
+package com.coffeerice.objetos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.nopalsoft.dosmil.Assets;
+import com.coffeerice.Assets;
 
 import java.util.LinkedHashMap;
 

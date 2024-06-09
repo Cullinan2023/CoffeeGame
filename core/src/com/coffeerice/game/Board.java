@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.game;
+package com.coffeerice.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -6,13 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Array.ArrayIterator;
-import com.nopalsoft.dosmil.Assets;
-import com.nopalsoft.dosmil.objetos.Piece;
-import com.nopalsoft.dosmil.screens.Screens;
+import com.coffeerice.Assets;
+import com.coffeerice.objetos.Piece;
+import com.coffeerice.screens.Screens;
 
 import java.util.Iterator;
 
-public class Tablero extends Group {
+public class Board extends Group {
 	static public final int STATE_RUNNING = 1;
 	static public final int STATE_NO_MORE_MOVES = 2;
 	static public final int STATE_GAMEOVER = 3;
@@ -25,7 +25,7 @@ public class Tablero extends Group {
 	public boolean moveUp, moveDown, moveLeft, moveRight;
 	public boolean didWin;
 
-	public Tablero() {
+	public Board() {
 		setSize(480, 480);
 		setPosition(Screens.SCREEN_WIDTH / 2f - getWidth() / 2f, 200);
 		addBackground();

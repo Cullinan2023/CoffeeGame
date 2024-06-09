@@ -1,4 +1,4 @@
-package com.nopalsoft.dosmil.scene2d;
+package com.coffeerice.scene2d;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.nopalsoft.dosmil.Assets;
-import com.nopalsoft.dosmil.Settings;
-import com.nopalsoft.dosmil.screens.MainMenuScreen;
-import com.nopalsoft.dosmil.screens.Screens;
+import com.coffeerice.screens.MainMenuScreen;
+import com.coffeerice.Assets;
+import com.coffeerice.Settings;
+import com.coffeerice.screens.Screens;
 
 public class GameOver extends Group {
 
@@ -28,15 +28,12 @@ public class GameOver extends Group {
         background.setSize(getWidth(), getHeight());
         addActor(background);
 
-        String textTitulo = Assets.idiomas.get("gameOver");
-        if (didWin)
-            textTitulo = Assets.idiomas.get("congratulations");
-
-        Label lbCongratulations = new Label(textTitulo, Assets.labelStyleGrande);
-        lbCongratulations.setAlignment(Align.center);
-        lbCongratulations.setFontScale(.50f);
-        lbCongratulations.setPosition(getWidth() / 2f - lbCongratulations.getWidth() / 2f, 365);
-        addActor(lbCongratulations);
+        Image imgGameStateText = new Image(Assets.gameOver);
+        if(didWin) 
+            imgGameStateText = new Image(Assets.gameClear);
+        imgGameStateText.setAlign(Align.center);
+        imgGameStateText.setPosition(getWidth() / 2f - imgGameStateText.getWidth() / 2f, 365);
+        addActor(imgGameStateText);
 
         final Table scoreTable = new Table();
         scoreTable.setSize(getWidth(), 180);
@@ -78,14 +75,10 @@ public class GameOver extends Group {
         scoreTable.add(lbBestNumScore).right().expand();
         
 
-        final Label lbMainMenu = new Label(Assets.idiomas.get("menu"), Assets.labelStyleGrande);
-        lbMainMenu.setWidth(getWidth() - 10);
-        lbMainMenu.setFontScale(.75f);
-        lbMainMenu.setPosition(getWidth() / 2f - lbMainMenu.getWidth() / 2f, 30);
-        lbMainMenu.setWrap(true);
-        lbMainMenu.setAlignment(Align.center);
-        screen.addEfectoPress(lbMainMenu);
-        lbMainMenu.addListener(new ClickListener() {
+        final Image imgMainMenu = new Image(Assets.mainMenu);
+        imgMainMenu.setPosition(getWidth() / 2f - imgMainMenu.getWidth() / 2f, 30);
+        screen.addEfectoPress(imgMainMenu);
+        imgMainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 screen.changeScreenWithFadeOut(MainMenuScreen.class, screen.game);
@@ -97,7 +90,7 @@ public class GameOver extends Group {
             @Override
             public void run() {
                 addActor(scoreTable);
-                addActor(lbMainMenu);
+                addActor(imgMainMenu);
             }
         })));
 
