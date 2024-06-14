@@ -24,7 +24,7 @@ public class GameOver extends Group {
         setPosition(Screens.SCREEN_WIDTH / 2f - getWidth() / 2f, 260);
         setScale(.5f);
 
-        Image background = new Image(Assets.fondoPuntuaciones);
+        Image background = new Image(Assets.backgroundRatings);
         background.setSize(getWidth(), getHeight());
         addActor(background);
 
@@ -39,25 +39,23 @@ public class GameOver extends Group {
         scoreTable.setSize(getWidth(), 180);
         scoreTable.setY(170);
         scoreTable.padLeft(15).padRight(15);
-        // scoreTable.debug();
 
         // ACTUAL TIME
-        Label lbTime = new Label(Assets.idiomas.get("time"), Assets.labelStyleChico);
+        Label lbTime = new Label(Assets.language.get("time"), Assets.labelStyleChico);
         lbTime.setAlignment(Align.left);
 
-        Label lblNumTime = new Label(time + Assets.idiomas.get("secondAbbreviation"), Assets.labelStyleChico);
+        Label lblNumTime = new Label(time + Assets.language.get("secondAbbreviation"), Assets.labelStyleChico);
         lblNumTime.setAlignment(Align.right);
 
         // ACTUAL SCORE
-        Label lbScore = new Label(Assets.idiomas.get("score"), Assets.labelStyleChico);
+        Label lbScore = new Label(Assets.language.get("score"), Assets.labelStyleChico);
         lbScore.setAlignment(Align.left);
 
         Label lbNumScore = new Label(score + "", Assets.labelStyleChico);
         lbNumScore.setAlignment(Align.right);
-        // lbNumMoves.setFontScale(.75f);
 
         // BEST MOVES
-        Label lbBestScore = new Label(Assets.idiomas.get("bestScore"), Assets.labelStyleChico);
+        Label lbBestScore = new Label(Assets.language.get("bestScore"), Assets.labelStyleChico);
         lbBestScore.setAlignment(Align.left);
 
         Label lbBestNumScore = new Label(Settings.bestScore + "", Assets.labelStyleChico);
@@ -77,7 +75,7 @@ public class GameOver extends Group {
 
         final Image imgMainMenu = new Image(Assets.mainMenu);
         imgMainMenu.setPosition(getWidth() / 2f - imgMainMenu.getWidth() / 2f, 30);
-        screen.addEfectoPress(imgMainMenu);
+        screen.addEffectPress(imgMainMenu);
         imgMainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

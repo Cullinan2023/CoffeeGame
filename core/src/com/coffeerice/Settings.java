@@ -7,27 +7,23 @@ public class Settings {
 
 	public static boolean isMusicOn;
 	public static boolean isSoundOn;
-	public static boolean didBuyNoAds;
-	public static int numeroVecesJugadas;
+	public static int playCount;
 	public static long bestScore;
 
 	private final static Preferences pref = Gdx.app
-			.getPreferences("com.tiar.dosmil");
+			.getPreferences("com.coffeerice");
 
 	public static void load() {
 
 		bestScore = pref.getLong("bestScore", 0);
-		numeroVecesJugadas = pref.getInteger("numeroVecesJugadas", 0);
-
-		didBuyNoAds = pref.getBoolean("didBuyNoAds", false);
+		playCount = pref.getInteger("playCount", 0);
 		isMusicOn = pref.getBoolean("isMusicOn", true);
 		isSoundOn = pref.getBoolean("isSoundOn", true);
 	}
 
 	public static void save() {
 		pref.putLong("bestScore", bestScore);
-		pref.putInteger("numeroVecesJugadas", numeroVecesJugadas);
-		pref.putBoolean("didBuyNoAds", didBuyNoAds);
+		pref.putInteger("playCount", playCount);
 		pref.putBoolean("isMusicOn", isMusicOn);
 		pref.putBoolean("isSoundOn", isSoundOn);
 		pref.flush();
@@ -40,5 +36,4 @@ public class Settings {
 		save();
 
 	}
-
 }

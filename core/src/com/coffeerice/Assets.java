@@ -17,13 +17,13 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 public class Assets {
 
-    public static I18NBundle idiomas;
+    public static I18NBundle language;
 
-    public static BitmapFont fontChico;
-    public static BitmapFont fontGrande;
+    public static BitmapFont smallFont;
+    public static BitmapFont bigFont;
 
-    public static AtlasRegion fondo;
-    public static AtlasRegion fondoTablero;
+    public static AtlasRegion background;
+    public static AtlasRegion backgroundBoard;
     public static AtlasRegion puzzleSolved;
 
     public static AtlasRegion title;
@@ -41,8 +41,8 @@ public class Assets {
     public static AtlasRegion gameOver;
     public static AtlasRegion gameClear;
     
-    public static NinePatchDrawable pixelNegro;
-    public static AtlasRegion fondoPuntuaciones;
+    public static NinePatchDrawable black;
+    public static AtlasRegion backgroundRatings;
 
     public static TextureRegionDrawable btAtras;
 
@@ -58,6 +58,8 @@ public class Assets {
     public static AtlasRegion piece19683;
     public static AtlasRegion piece59049;
     public static AtlasRegion piece177147;
+    public static AtlasRegion bombItemPiece;
+    public static AtlasRegion x3ItemPiece;
 
     public static LabelStyle labelStyleChico;
     public static LabelStyle labelStyleGrande;
@@ -73,30 +75,30 @@ public class Assets {
     static Sound move2;
 
     public static void loadFont() {
-        fontChico = new BitmapFont(Gdx.files.internal("data/font25.fnt"),
+        smallFont = new BitmapFont(Gdx.files.internal("data/font25.fnt"),
                 atlas.findRegion("font25"));
 
-        fontGrande = new BitmapFont(Gdx.files.internal("data/font45.fnt"),
+        bigFont = new BitmapFont(Gdx.files.internal("data/font45.fnt"),
                 atlas.findRegion("font45"));
     }
 
     private static void loadStyle() {
-        labelStyleChico = new LabelStyle(fontChico, Color.WHITE);
-        labelStyleGrande = new LabelStyle(fontGrande, Color.WHITE);
+        labelStyleChico = new LabelStyle(smallFont, Color.WHITE);
+        labelStyleGrande = new LabelStyle(bigFont, Color.WHITE);
 
-		/* Button Musica */
+		/* Button */
         TextureRegionDrawable btMusicOn = new TextureRegionDrawable(
                 atlas.findRegion("btMusic"));
         TextureRegionDrawable btMusicOff = new TextureRegionDrawable(
                 atlas.findRegion("btSinMusic"));
         styleButtonMusic = new ButtonStyle(btMusicOn, null, btMusicOff);
 
-		/* Boton Sonido */
-        TextureRegionDrawable botonSonidoOn = new TextureRegionDrawable(
+		/* Button Sound */
+        TextureRegionDrawable buttonSFXOn = new TextureRegionDrawable(
                 atlas.findRegion("btSFX"));
-        TextureRegionDrawable botonSonidoOff = new TextureRegionDrawable(
+        TextureRegionDrawable buttonSFXOff = new TextureRegionDrawable(
                 atlas.findRegion("btSinSFX"));
-        styleButtonSFX = new ButtonStyle(botonSonidoOn, null, botonSonidoOff);
+        styleButtonSFX = new ButtonStyle(buttonSFXOn, null, buttonSFXOff);
 
 		/* ImageButton Pause */
         TextureRegionDrawable btPauseUp = new TextureRegionDrawable(
@@ -114,10 +116,10 @@ public class Assets {
         loadStyle();
 
         if (MathUtils.randomBoolean())
-            fondo = atlas.findRegion("fondo");
+            background = atlas.findRegion("background");
         else
-            fondo = atlas.findRegion("fondo2");
-        fondoTablero = atlas.findRegion("fondoPuntuaciones");
+            background = atlas.findRegion("background2");
+        backgroundBoard = atlas.findRegion("backgroundRatings");
 
         title = atlas.findRegion("title");
         play = atlas.findRegion("play");
@@ -134,9 +136,9 @@ public class Assets {
         helpText1 = atlas.findRegion("helpText1");
         helpText2 = atlas.findRegion("helpText2");
         
-        pixelNegro = new NinePatchDrawable(new NinePatch(
-                atlas.findRegion("pixelNegro"), 1, 1, 0, 0));
-        fondoPuntuaciones = atlas.findRegion("fondoPuntuaciones");
+        black = new NinePatchDrawable(new NinePatch(
+                atlas.findRegion("black"), 1, 1, 0, 0));
+        backgroundRatings = atlas.findRegion("backgroundRatings");
 
         puzzleSolved = atlas.findRegion("puzzleSolved");
 
@@ -153,8 +155,10 @@ public class Assets {
         piece19683 = atlas.findRegion("piece19683");
         piece59049 = atlas.findRegion("piece59049");
         piece177147 = atlas.findRegion("piece177147");
+        bombItemPiece = atlas.findRegion("bombItemPiece");
+        x3ItemPiece = atlas.findRegion("x3ItemPiece");
 
-        btAtras = new TextureRegionDrawable(atlas.findRegion("btAtras2"));
+        btAtras = new TextureRegionDrawable(atlas.findRegion("btAtlas2"));
 
         move1 = Gdx.audio.newSound(Gdx.files.internal("data/Sounds/move1.mp3"));
         move2 = Gdx.audio.newSound(Gdx.files.internal("data/Sounds/move2.mp3"));
@@ -168,7 +172,7 @@ public class Assets {
 
         playMusic();
 
-        idiomas = I18NBundle.createBundle(Gdx.files.internal("strings/strings"));
+        language = I18NBundle.createBundle(Gdx.files.internal("strings/strings"));
     }
 
     public static void playMusic() {
@@ -184,11 +188,10 @@ public class Assets {
     }
 
     public static void playSoundMove() {
-        if (Settings.isSoundOn) {
-            if (MathUtils.randomBoolean())
-                move1.play(.3f);
-            else
-                move2.play(.3f);
-        }
+        if (Settings.isSoundOn) move1.play(.3f);
+    }
+    
+    public static void playSoundMerge() {
+        if (Settings.isSoundOn) move2.play(.3f);
     }
 }

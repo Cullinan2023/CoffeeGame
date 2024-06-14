@@ -42,7 +42,7 @@ public class GameScreen extends Screens {
 
         initUI();
 
-        Settings.numeroVecesJugadas++;
+        Settings.playCount++;
 
     }
 
@@ -51,15 +51,15 @@ public class GameScreen extends Screens {
         tableMarker.setSize(SCREEN_WIDTH, 100);
         tableMarker.setPosition(0, 680);
 
-        labelTime = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
+        labelTime = new Label(Assets.language.get("score") + "\n0", Assets.labelStyleChico);
         labelTime.setAlignment(Align.center);
         labelTime.setFontScale(1.15f);
 
-        labelScore = new Label(Assets.idiomas.get("score") + "\n0", Assets.labelStyleChico);
+        labelScore = new Label(Assets.language.get("score") + "\n0", Assets.labelStyleChico);
         labelScore.setFontScale(1.15f);
         labelScore.setAlignment(Align.center);
 
-        labelBestScore = new Label(Assets.idiomas.get("best") + "\n" + Settings.bestScore, Assets.labelStyleChico);
+        labelBestScore = new Label(Assets.language.get("best") + "\n" + Settings.bestScore, Assets.labelStyleChico);
         labelBestScore.setAlignment(Align.center);
         labelBestScore.setFontScale(1.15f);
 
@@ -100,8 +100,8 @@ public class GameScreen extends Screens {
                 break;
         }
 
-        labelTime.setText(Assets.idiomas.get("time") + "\n" + ((int) board.tiempo));
-        labelScore.setText(Assets.idiomas.get("score") + "\n" + (board.score));
+        labelTime.setText(Assets.language.get("time") + "\n" + ((int) board.time));
+        labelScore.setText(Assets.language.get("score") + "\n" + (board.score));
 
     }
 
@@ -117,7 +117,7 @@ public class GameScreen extends Screens {
     public void draw(float delta) {
 
         batcher.begin();
-        batcher.draw(Assets.fondo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        batcher.draw(Assets.background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         batcher.end();
         stageGame.draw();
 
@@ -152,7 +152,7 @@ public class GameScreen extends Screens {
     private void setGameover() {
         state = STATE_GAME_OVER;
         Settings.setBestScores(board.score);
-        GameOver oGameOver = new GameOver(this, board.didWin, (int) board.tiempo, board.score);
+        GameOver oGameOver = new GameOver(this, board.didWin, (int) board.time, board.score);
         stage.addActor(oGameOver);
 
     }

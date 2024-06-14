@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.coffeerice.Assets;
@@ -31,7 +30,7 @@ public class MainMenuScreen extends Screens {
         // Play
         imgPlay = new Image(Assets.play);
         imgPlay.setPosition(SCREEN_WIDTH / 2f - imgPlay.getWidth() / 2f, 350);
-        addEfectoPress(imgPlay);
+        addEffectPress(imgPlay);
         imgPlay.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 changeScreenWithFadeOut(GameScreen.class, game);
@@ -41,7 +40,7 @@ public class MainMenuScreen extends Screens {
         // Help
         imgHelp = new Image(Assets.help);
         imgHelp.setPosition(SCREEN_WIDTH / 2f - imgHelp.getWidth() / 2f, 250);
-        addEfectoPress(imgHelp);
+        addEffectPress(imgHelp);
         imgHelp.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 changeScreenWithFadeOut(HelpScreen.class, game);
@@ -101,7 +100,7 @@ public class MainMenuScreen extends Screens {
     @Override
     public void draw(float delta) {
         batcher.begin();
-        batcher.draw(Assets.fondo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        batcher.draw(Assets.background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         batcher.end();
 
     }

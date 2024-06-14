@@ -17,9 +17,9 @@ public class Board extends Group {
 	static public final int STATE_NO_MORE_MOVES = 2;
 	static public final int STATE_GAMEOVER = 3;
 	public int state;
-	Array<Piece> arrPiezas;
+	Array<Piece> arrPieces;
 
-	public float tiempo;
+	public float time;
 	public long score;
 
 	public boolean moveUp, moveDown, moveLeft, moveRight;
@@ -30,36 +30,35 @@ public class Board extends Group {
 		setPosition(Screens.SCREEN_WIDTH / 2f - getWidth() / 2f, 200);
 		addBackground();
 
-		arrPiezas = new Array<Piece>(16);
+		arrPieces = new Array<Piece>(16);
 
 		didWin = false;
-
-		// Inicializco el tablero con puros ceros
+		
 		for (int i = 0; i < 16; i++) {
 			addActor(new Piece(i, 0));
 		}
 
-		addPieza();
-		addPieza();
+		addPiece();
+		addPiece();
 		state = STATE_RUNNING;
 	}
 
 	private void addBackground() {
-		Image background = new Image(Assets.fondoTablero);
+		Image background = new Image(Assets.backgroundBoard);
 		background.setSize(getWidth(), getHeight());
 		background.setPosition(0, 0);
 		addActor(background);
 
 	}
 
-	public void addPieza() {
-		if (isTableroFull())
+	public void addPiece() {
+		if (isBoardFull())
 			return;
-		boolean vacio = false;
+		boolean empty = false;
 		int num = 0;
-		while (!vacio) {
+		while (!empty) {
 			num = MathUtils.random(15);
-			vacio = checarEspacioVacio(num);
+			empty = checkEmptySpace(num);
 		}
         int randomValue = MathUtils.random(99);
 
@@ -76,17 +75,17 @@ public class Board extends Group {
         }
 
 		Piece obj = new Piece(num, valor);
-		arrPiezas.add(obj);
+		arrPieces.add(obj);
 		addActor(obj);
 
 	}
 
-	public void addPieza(int pos) {
-		if (isTableroFull())
+	public void addPiece(int pos) {
+		if (isBoardFull())
 			return;
 
 		Piece obj = new Piece(pos, 4);
-		arrPiezas.add(obj);
+		arrPieces.add(obj);
 		addActor(obj);
 
 	}
@@ -98,7 +97,7 @@ public class Board extends Group {
 		// Si ya no hay acciones pendientes ahora si me pongo en gameover
 		if (state == STATE_NO_MORE_MOVES) {
 			int numActions = 0;
-			Iterator<Piece> i = arrPiezas.iterator();
+			Iterator<Piece> i = arrPieces.iterator();
 			while (i.hasNext()) {
 				numActions += i.next().getActions().size;
 			}
@@ -108,49 +107,49 @@ public class Board extends Group {
 			return;
 		}
 
-		boolean didMovePieza = false;
+		boolean didMovePiece = false;
+		boolean didMergePiece = false;
 
 		if (moveUp) {
 			for (int con = 0; con < 4; con++) {
-				Iterator<Piece> i = arrPiezas.iterator();
+				Iterator<Piece> i = arrPieces.iterator();
 				while (i.hasNext()) {
 					Piece obj = i.next();
-					int nextPos = obj.posicion - 4;
-					// Primero reviso si se puede juntar
-					if (checarMergeUp(obj.posicion, nextPos)) {
-						Piece objNext = getPiezaEnPos(nextPos);
+					int nextPos = obj.position - 4;
+					if (checkMergeUp(obj.position, nextPos)) {
+						Piece objNext = getPiece(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+							if (obj.getValue() == -1 || objNext.getValue() == -1) {
 								i.remove();
-								arrPiezas.removeValue(objNext, true);
-								removePieza(objNext);
-								removePieza(obj);
-							} else if (obj.getValor() == -2) {
+								arrPieces.removeValue(objNext, true);
+								removePiece(objNext);
+								removePiece(obj);
+							} else if (obj.getValue() == -2) {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
-							} else if (objNext.getValor() == -2) {
+							} else if (objNext.getValue() == -2) {
 								i.remove();
-								removePieza(objNext);
-								obj.setValor(obj.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								removePiece(objNext);
+								obj.setValue(obj.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
 								obj.justChanged = true;
 							} else {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
 							}
-							didMovePieza = true;
+							didMovePiece = true;
 							continue;
 						}
 					}
-					if (checarEspacioVacioUp(nextPos)) {
+					if (checkEmptySpaceUp(nextPos)) {
 						obj.moveToPosition(nextPos);
-						didMovePieza = true;
+						didMovePiece = true;
 					}
 				}
 			}
@@ -158,45 +157,45 @@ public class Board extends Group {
 
 		else if (moveDown) {
 			for (int con = 0; con < 4; con++) {
-				Iterator<Piece> i = arrPiezas.iterator();
+				Iterator<Piece> i = arrPieces.iterator();
 				while (i.hasNext()) {
 					Piece obj = i.next();
-					int nextPos = obj.posicion + 4;
-					// Primero reviso si se puede juntar
-					if (checarMergeUp(obj.posicion, nextPos)) {
-						Piece objNext = getPiezaEnPos(nextPos);
+					int nextPos = obj.position + 4;
+					if (checkMergeUp(obj.position, nextPos)) {
+						Piece objNext = getPiece(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+							if (obj.getValue() == -1 || objNext.getValue() == -1) {
 								i.remove();
-								arrPiezas.removeValue(objNext, true);
-								removePieza(objNext);
-								removePieza(obj);
-							} else if (obj.getValor() == -2) {
+								arrPieces.removeValue(objNext, true);
+								removePiece(objNext);
+								removePiece(obj);
+							} else if (obj.getValue() == -2) {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
-							} else if (objNext.getValor() == -2) {
+							} else if (objNext.getValue() == -2) {
 								i.remove();
-								removePieza(objNext);
-								obj.setValor(obj.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								removePiece(objNext);
+								obj.setValue(obj.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
 								obj.justChanged = true;
 							} else {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
 							}
-							didMovePieza = true;
+							didMergePiece = true;
+							didMovePiece = true;
 							continue;
 						}
 					}
-					if (checarEspacioVacioDown(nextPos)) {
+					if (checkEmptySpaceDown(nextPos)) {
 						obj.moveToPosition(nextPos);
-						didMovePieza = true;
+						didMovePiece = true;
 					}
 				}
 			}
@@ -204,45 +203,45 @@ public class Board extends Group {
 
 		else if (moveLeft) {
 			for (int con = 0; con < 4; con++) {
-				Iterator<Piece> i = arrPiezas.iterator();
+				Iterator<Piece> i = arrPieces.iterator();
 				while (i.hasNext()) {
 					Piece obj = i.next();
-					int nextPos = obj.posicion - 1;
-					// Primero reviso si se puede juntar
-					if (checarMergeSides(obj.posicion, nextPos)) {
-						Piece objNext = getPiezaEnPos(nextPos);
+					int nextPos = obj.position - 1;
+					if (checkMergeSides(obj.position, nextPos)) {
+						Piece objNext = getPiece(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+							if (obj.getValue() == -1 || objNext.getValue() == -1) {
 								i.remove();
-								arrPiezas.removeValue(objNext, true);
-								removePieza(objNext);
-								removePieza(obj);
-							} else if (obj.getValor() == -2) {
+								arrPieces.removeValue(objNext, true);
+								removePiece(objNext);
+								removePiece(obj);
+							} else if (obj.getValue() == -2) {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
-							} else if (objNext.getValor() == -2) {
+							} else if (objNext.getValue() == -2) {
 								i.remove();
-								removePieza(objNext);
-								obj.setValor(obj.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								removePiece(objNext);
+								obj.setValue(obj.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
 								obj.justChanged = true;
 							} else {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
 							}
-							didMovePieza = true;
+							didMergePiece = true;
+							didMovePiece = true;
 							continue;
 						}
 					}
-					if (checarEspacioVacioLeft(nextPos)) {
+					if (checkEmptySpaceLeft(nextPos)) {
 						obj.moveToPosition(nextPos);
-						didMovePieza = true;
+						didMovePiece = true;
 					}
 				}
 			}
@@ -251,45 +250,45 @@ public class Board extends Group {
 
 				else if (moveRight) {
 			for (int con = 0; con < 4; con++) {
-				Iterator<Piece> i = arrPiezas.iterator();
+				Iterator<Piece> i = arrPieces.iterator();
 				while (i.hasNext()) {
 					Piece obj = i.next();
-					int nextPos = obj.posicion + 1;
-					// Primero reviso si se puede juntar
-					if (checarMergeSides(obj.posicion, nextPos)) {
-						Piece objNext = getPiezaEnPos(nextPos);
+					int nextPos = obj.position + 1;
+					if (checkMergeSides(obj.position, nextPos)) {
+						Piece objNext = getPiece(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+							if (obj.getValue() == -1 || objNext.getValue() == -1) {
 								i.remove();
-								arrPiezas.removeValue(objNext, true);
-								removePieza(objNext);
-								removePieza(obj);
-							} else if (obj.getValor() == -2) {
+								arrPieces.removeValue(objNext, true);
+								removePiece(objNext);
+								removePiece(obj);
+							} else if (obj.getValue() == -2) {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
-							} else if (objNext.getValor() == -2) {
+							} else if (objNext.getValue() == -2) {
 								i.remove();
-								removePieza(objNext);
-								obj.setValor(obj.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								removePiece(objNext);
+								obj.setValue(obj.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
 								obj.justChanged = true;
 							} else {
 								i.remove();
-								removePieza(obj);
-								objNext.setValor(objNext.getValor() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								removePiece(obj);
+								objNext.setValue(objNext.getValue() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
 								objNext.justChanged = true;
 							}
-							didMovePieza = true;
+							didMovePiece = true;
+							didMergePiece = true;
 							continue;
 						}
 					}
-					if (checarEspacioVacioRight(nextPos)) {
+					if (checkEmptySpaceRight(nextPos)) {
 						obj.moveToPosition(nextPos);
-						didMovePieza = true;
+						didMovePiece = true;
 					}
 				}
 			}
@@ -301,149 +300,152 @@ public class Board extends Group {
 			didWin = true;
 		}
 
-		if ((moveUp || moveDown || moveRight || moveLeft) && didMovePieza) {
-			addPieza();
+		if (didMovePiece && !didMergePiece) {
+			addPiece();
 			Assets.playSoundMove();
 		}
+		if(didMovePiece && didMergePiece) {
+			Assets.playSoundMerge();
+		}
 
-		if (isTableroFull() && !isPosibleToMove()) {
+		if (isBoardFull() && !isPossibleToMove()) {
 			state = STATE_NO_MORE_MOVES;
 		}
 
 		moveDown = moveLeft = moveRight = moveUp = false;
 
-		tiempo += Gdx.graphics.getRawDeltaTime();
+		time += Gdx.graphics.getRawDeltaTime();
 
 	}
 
-	private boolean checarMergeSides(int posActual, int nextPosition) {
-		if ((posActual == 3 || posActual == 7 || posActual == 11) && nextPosition > posActual)// Solo pueden juntarse las del mismo rengolon
+	private boolean checkMergeSides(int posActual, int nextPosition) {
+		if ((posActual == 3 || posActual == 7 || posActual == 11) && nextPosition > posActual)
 			return false;
 		if ((posActual == 12 || posActual == 8 || posActual == 4) && nextPosition < posActual)
 			return false;
-		Piece obj1 = getPiezaEnPos(posActual);
-		Piece obj2 = getPiezaEnPos(nextPosition);
+		Piece obj1 = getPiece(posActual);
+		Piece obj2 = getPiece(nextPosition);
 
 		if (obj1 == null || obj2 == null)
 			return false;
-		else if ((obj1.getValor() != obj2.getValor() && obj1.getValor() != -1 && obj2.getValor() != -1 && obj1.getValor() != -2 && obj2.getValor() != -2))
+		else if ((obj1.getValue() != obj2.getValue() && obj1.getValue() != -1 && obj2.getValue() != -1 && obj1.getValue() != -2 && obj2.getValue() != -2))
 			return false;
 		else
 			return true;
 
 	}
 
-	private boolean checarMergeUp(int posActual, int nextPosition) {
+	private boolean checkMergeUp(int posActual, int nextPosition) {
 
-		Piece obj1 = getPiezaEnPos(posActual);
-		Piece obj2 = getPiezaEnPos(nextPosition);
+		Piece obj1 = getPiece(posActual);
+		Piece obj2 = getPiece(nextPosition);
 
 		if (obj1 == null || obj2 == null)
 			return false;
-		else if ((obj1.getValor() != obj2.getValor() && obj1.getValor() != -1 && obj2.getValor() != -1 && obj1.getValor() != -2 && obj2.getValor() != -2))
+		else if ((obj1.getValue() != obj2.getValue() && obj1.getValue() != -1 && obj2.getValue() != -1 && obj1.getValue() != -2 && obj2.getValue() != -2))
 			return false;
 		else
 			return true;
 
 	}
 
-	private boolean checarEspacioVacio(int pos) {
-		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPiezas);
+	private boolean checkEmptySpace(int pos) {
+		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPieces);
 		while (ite.hasNext()) {
-			if (ite.next().posicion == pos)
+			if (ite.next().position == pos)
 				return false;
 		}
 		return true;
 	}
 
-	private boolean checarEspacioVacioUp(int pos) {
+	private boolean checkEmptySpaceUp(int pos) {
 		if (pos < 0)
 			return false;
-		return checarEspacioVacio(pos);
+		return checkEmptySpace(pos);
 	}
 
-	private boolean checarEspacioVacioDown(int pos) {
+	private boolean checkEmptySpaceDown(int pos) {
 		if (pos > 15)
 			return false;
-		return checarEspacioVacio(pos);
+		return checkEmptySpace(pos);
 	}
 
-	private boolean checarEspacioVacioRight(int pos) {
+	private boolean checkEmptySpaceRight(int pos) {
 		if (pos == 4 || pos == 8 || pos == 12 || pos == 16)
 			return false;
-		return checarEspacioVacio(pos);
+		return checkEmptySpace(pos);
 	}
 
-	private boolean checarEspacioVacioLeft(int pos) {
+	private boolean checkEmptySpaceLeft(int pos) {
 		if (pos == 11 || pos == 7 || pos == 3 || pos == -1)
 			return false;
-		return checarEspacioVacio(pos);
+		return checkEmptySpace(pos);
 	}
 
-	private Piece getPiezaEnPos(int pos) {
-		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPiezas);
+	private Piece getPiece(int pos) {
+		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPieces);
 		while (ite.hasNext()) {
 			Piece obj = ite.next();
-			if (obj.posicion == pos)
+			if (obj.position == pos)
 				return obj;
 		}
 		return null;
 	}
 
-	private boolean isTableroFull() {
-		if (arrPiezas.size == (16))
+	private boolean isBoardFull() {
+		if (arrPieces.size == (16))
 			return true;
 		else
 			return false;
 	}
 
 	private boolean didWin() {
-		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPiezas);
+		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPieces);
 		while (ite.hasNext()) {
 			Piece obj = ite.next();
-			if (obj.getValor() >= 2000)// si hay una pieza que valga mas de 15 mil se gana
+			if (obj.getValue() >= 2000)// si hay una pieza que valga mas de 15 mil se gana
 				return true;
 		}
 		return false;
 	}
 
-	private boolean isPosibleToMove() {
+	private boolean isPossibleToMove() {
 
 		boolean canMove = false;
-		if (isPosibleToMoveRightLeft()) {
+		if (isPossibleToMoveRightLeft()) {
 			canMove = true;
 
 		}
 
-		if (isPosibleToMoveUpDown()) {
+		if (isPossibleToMoveUpDown()) {
 			canMove = true;
 		}
 		return canMove;
 
 	}
 
-	boolean isPosibleToMoveRightLeft() {
+	boolean isPossibleToMoveRightLeft() {
 		for (int ren = 0; ren < 16; ren += 4) {
 			for (int col = ren; col < ren + 3; col++) {
-				if (checarMergeSides(col, col + 1))
+				if (checkMergeSides(col, col + 1))
 					return true;
 			}
 		}
 		return false;
 	}
 
-	boolean isPosibleToMoveUpDown() {
+	boolean isPossibleToMoveUpDown() {
 		for (int col = 0; col < 4; col++) {
 			for (int ren = col; ren < col + 16; ren += 4) {
-				if (checarMergeUp(ren, ren + 4))
+				if (checkMergeUp(ren, ren + 4))
 					return true;
 			}
 		}
 		return false;
 	}
 
-	private void removePieza(Piece obj) {
+	private void removePiece(Piece obj) {
 		removeActor(obj);
-		arrPiezas.removeValue(obj, true);
+		arrPieces.removeValue(obj, true);
 	}
 }

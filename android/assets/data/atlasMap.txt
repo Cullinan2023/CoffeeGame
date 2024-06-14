@@ -2,7 +2,7 @@ atlasMap.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-btAtras2
+btAtlas2
   rotate: false
   xy: 1536, 2
   size: 17, 19
@@ -60,7 +60,7 @@ gameClear
   index: -1
 kTeam
   rotate: false
-  xy: 1071, 401
+  xy: 1058, 399
   size: 129, 14
   orig: 30, 29
   offset: 0, 0
@@ -121,21 +121,21 @@ help
   orig: 30, 29
   offset: 0, 0
   index: -1
-fondo
+background
   rotate: false
   xy: 2, 2
   size: 480, 800
   orig: 480, 800
   offset: 0, 0
   index: -1
-fondo2
+background2
   rotate: false
   xy: 484, 2
   size: 480, 800
   orig: 480, 800
   offset: 0, 0
   index: -1
-fondoPuntuaciones
+backgroundRatings
   rotate: false
   xy: 1284, 254
   size: 134, 81
@@ -233,6 +233,20 @@ piece27
   orig: 100, 100
   offset: 0, 0
   index: -1
+bombItemPiece
+  rotate: false
+  xy: 1200, 420
+  size: 92, 92
+  orig: 100, 100
+  offset: -1, -1
+  index: -1
+x3ItemPiece
+  rotate: false
+  xy: 1190, 316
+  size: 92, 92
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 pieceEmpty
   rotate: false
   xy: 1374, 641
@@ -240,7 +254,7 @@ pieceEmpty
   orig: 100, 100
   offset: 0, 0
   index: -1
-pixelNegro
+black
   rotate: false
   xy: 1420, 323
   size: 5, 5

@@ -1,6 +1,5 @@
 package com.coffeerice.objetos;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,58 +11,56 @@ import java.util.LinkedHashMap;
 
 public class Piece extends Actor {
 	public boolean justChanged = false;
-
-	// //Las posiciones empiezan a contar de izq a derecha desde arriba hacia abajo
-	final static LinkedHashMap<Integer, Vector2> mapPosiciones = new LinkedHashMap<Integer, Vector2>();
+	
+	final static LinkedHashMap<Integer, Vector2> mapPositions = new LinkedHashMap<Integer, Vector2>();
 	static {
-		mapPosiciones.put(0, new Vector2(20, 350));
-		mapPosiciones.put(1, new Vector2(130, 350));
-		mapPosiciones.put(2, new Vector2(240, 350));
-		mapPosiciones.put(3, new Vector2(350, 350));
-		mapPosiciones.put(4, new Vector2(20, 240));
-		mapPosiciones.put(5, new Vector2(130, 240));
-		mapPosiciones.put(6, new Vector2(240, 240));
-		mapPosiciones.put(7, new Vector2(350, 240));
-		mapPosiciones.put(8, new Vector2(20, 130));
-		mapPosiciones.put(9, new Vector2(130, 130));
-		mapPosiciones.put(10, new Vector2(240, 130));
-		mapPosiciones.put(11, new Vector2(350, 130));
-		mapPosiciones.put(12, new Vector2(20, 20));
-		mapPosiciones.put(13, new Vector2(130, 20));
-		mapPosiciones.put(14, new Vector2(240, 20));
-		mapPosiciones.put(15, new Vector2(350, 20));
+		mapPositions.put(0, new Vector2(20, 350));
+		mapPositions.put(1, new Vector2(130, 350));
+		mapPositions.put(2, new Vector2(240, 350));
+		mapPositions.put(3, new Vector2(350, 350));
+		mapPositions.put(4, new Vector2(20, 240));
+		mapPositions.put(5, new Vector2(130, 240));
+		mapPositions.put(6, new Vector2(240, 240));
+		mapPositions.put(7, new Vector2(350, 240));
+		mapPositions.put(8, new Vector2(20, 130));
+		mapPositions.put(9, new Vector2(130, 130));
+		mapPositions.put(10, new Vector2(240, 130));
+		mapPositions.put(11, new Vector2(350, 130));
+		mapPositions.put(12, new Vector2(20, 20));
+		mapPositions.put(13, new Vector2(130, 20));
+		mapPositions.put(14, new Vector2(240, 20));
+		mapPositions.put(15, new Vector2(350, 20));
 	}
 
-	final float SIZE = 110;// Tamano final de la ficha
-	public int posicion;
+	final float SIZE = 110;
+	public int position;
 
-	private int valor;// esta pieza la hice privada porque cuando cambio su valor tambien tengo que cambiar la imagen de esta pieza
+	private int value;
 	TextureRegion keyframe;
 
-	public Piece(int posicion, int valor) {
-		this.posicion = posicion;
+	public Piece(int position, int value) {
+		this.position = position;
 		setWidth(SIZE);
 		setHeight(SIZE);
 		setOrigin(SIZE / 2f, SIZE / 2f);
 
-		setPosition(mapPosiciones.get(posicion).x, mapPosiciones.get(posicion).y);
-		setValor(valor);
+		setPosition(mapPositions.get(position).x, mapPositions.get(position).y);
+		setValue(value);
 
-		if (valor != 0) {// Si la pieza vale 0 es un cuadro de los azules que no tienen nada
+		if (value != 0) {
 			setScale(.8f);
 			addAction(Actions.scaleTo(1, 1, .25f));
-			Gdx.app.log("Se creo pieza en ", posicion + "");
 		}
 
 	}
 
-	public int getValor() {
-		return valor;
+	public int getValue() {
+		return value;
 	};
 
-	public void setValor(int valor) {
-		this.valor = valor;
-		switch (valor) {
+	public void setValue(int value) {
+		this.value = value;
+		switch (value) {
 		default:
 		case 0:
 			keyframe = Assets.pieceEmpty;
@@ -102,12 +99,11 @@ public class Piece extends Actor {
 			keyframe = Assets.piece177147;
 			break;
 		case -1:
-			keyframe = Assets.piece177147;
+			keyframe = Assets.bombItemPiece;
 			break;
 		case -2:
-			keyframe = Assets.piece59049;
+			keyframe = Assets.x3ItemPiece;
 			break;
-
 		}
 
 	}
@@ -119,9 +115,9 @@ public class Piece extends Actor {
 	}
 
 	public void moveToPosition(int pos) {
-		this.posicion = pos;
-		Gdx.app.log("Move to ", pos + "");
-		addAction(Actions.moveTo(mapPosiciones.get(posicion).x, mapPosiciones.get(posicion).y, .075f));
+		this.position = pos;
+		// Gdx.app.log("Move to ", pos + "");
+		addAction(Actions.moveTo(mapPositions.get(position).x, mapPositions.get(position).y, .075f));
 	}
 
 	@Override
