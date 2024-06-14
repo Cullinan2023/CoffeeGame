@@ -41,24 +41,24 @@ public class GameOver extends Group {
         scoreTable.padLeft(15).padRight(15);
 
         // ACTUAL TIME
-        Label lbTime = new Label(Assets.language.get("time"), Assets.labelStyleChico);
+        Label lbTime = new Label(Assets.language.get("time"), Assets.labelStyleSmallFont);
         lbTime.setAlignment(Align.left);
 
-        Label lblNumTime = new Label(time + Assets.language.get("secondAbbreviation"), Assets.labelStyleChico);
+        Label lblNumTime = new Label(time + Assets.language.get("secondAbbreviation"), Assets.labelStyleSmallFont);
         lblNumTime.setAlignment(Align.right);
 
         // ACTUAL SCORE
-        Label lbScore = new Label(Assets.language.get("score"), Assets.labelStyleChico);
+        Label lbScore = new Label(Assets.language.get("score"), Assets.labelStyleSmallFont);
         lbScore.setAlignment(Align.left);
 
-        Label lbNumScore = new Label(score + "", Assets.labelStyleChico);
+        Label lbNumScore = new Label(score + "", Assets.labelStyleSmallFont);
         lbNumScore.setAlignment(Align.right);
 
         // BEST MOVES
-        Label lbBestScore = new Label(Assets.language.get("bestScore"), Assets.labelStyleChico);
+        Label lbBestScore = new Label(Assets.language.get("bestScore"), Assets.labelStyleSmallFont);
         lbBestScore.setAlignment(Align.left);
 
-        Label lbBestNumScore = new Label(Settings.bestScore + "", Assets.labelStyleChico);
+        Label lbBestNumScore = new Label(Settings.bestScore + "", Assets.labelStyleSmallFont);
         lbBestNumScore.setAlignment(Align.right);
 
         scoreTable.add(lbTime).left();

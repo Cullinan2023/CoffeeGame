@@ -51,15 +51,15 @@ public class GameScreen extends Screens {
         tableMarker.setSize(SCREEN_WIDTH, 100);
         tableMarker.setPosition(0, 680);
 
-        labelTime = new Label(Assets.language.get("score") + "\n0", Assets.labelStyleChico);
+        labelTime = new Label(Assets.language.get("time") + "\n0", Assets.labelStyleSmallFont);
         labelTime.setAlignment(Align.center);
         labelTime.setFontScale(1.15f);
 
-        labelScore = new Label(Assets.language.get("score") + "\n0", Assets.labelStyleChico);
+        labelScore = new Label(Assets.language.get("score") + "\n0", Assets.labelStyleSmallFont);
         labelScore.setFontScale(1.15f);
         labelScore.setAlignment(Align.center);
 
-        labelBestScore = new Label(Assets.language.get("best") + "\n" + Settings.bestScore, Assets.labelStyleChico);
+        labelBestScore = new Label(Assets.language.get("best") + "\n" + Settings.bestScore, Assets.labelStyleSmallFont);
         labelBestScore.setAlignment(Align.center);
         labelBestScore.setFontScale(1.15f);
 

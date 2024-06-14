@@ -61,8 +61,8 @@ public class Assets {
     public static AtlasRegion bombItemPiece;
     public static AtlasRegion x3ItemPiece;
 
-    public static LabelStyle labelStyleChico;
-    public static LabelStyle labelStyleGrande;
+    public static LabelStyle labelStyleSmallFont;
+    public static LabelStyle labelStyleBigFont;
     public static ButtonStyle styleButtonMusic;
     public static ButtonStyle styleButtonPause;
     public static ButtonStyle styleButtonSFX;
@@ -83,8 +83,8 @@ public class Assets {
     }
 
     private static void loadStyle() {
-        labelStyleChico = new LabelStyle(smallFont, Color.WHITE);
-        labelStyleGrande = new LabelStyle(bigFont, Color.WHITE);
+        labelStyleSmallFont = new LabelStyle(smallFont, Color.WHITE);
+        labelStyleBigFont = new LabelStyle(bigFont, Color.WHITE);
 
 		/* Button */
         TextureRegionDrawable btMusicOn = new TextureRegionDrawable(

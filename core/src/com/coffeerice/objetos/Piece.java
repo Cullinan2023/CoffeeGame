@@ -38,7 +38,7 @@ public class Piece extends Actor {
 	private int value;
 	TextureRegion keyframe;
 
-	public Piece(int position, int value) {
+		public Piece(int position, int value) {
 		this.position = position;
 		setWidth(SIZE);
 		setHeight(SIZE);
