@@ -61,7 +61,7 @@ public class Board extends Group {
 			num = MathUtils.random(15);
 			vacio = checarEspacioVacio(num);
 		}
-		int valor = MathUtils.random(1) == 0 ? 2 : 4;// Las valor inicial puede ser 2 o 4
+		int valor = MathUtils.random(1) == 0 ? 3 : 9;// Las valor inicial puede ser 2 o 4
 		Piece obj = new Piece(num, valor);
 		arrPiezas.add(obj);
 		addActor(obj);
@@ -109,8 +109,8 @@ public class Board extends Group {
 						if (!objNext.justChanged && !obj.justChanged) {
 							i.remove();
 							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+							objNext.setValor(objNext.getValor() * 3);
+							score += objNext.getValor();
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -135,8 +135,8 @@ public class Board extends Group {
 						if (!objNext.justChanged && !obj.justChanged) {
 							i.remove();
 							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+							objNext.setValor(objNext.getValor() * 3);
+							score += objNext.getValor();
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -161,8 +161,8 @@ public class Board extends Group {
 						if (!objNext.justChanged && !obj.justChanged) {
 							i.remove();
 							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+							objNext.setValor(objNext.getValor() * 3);
+							score += objNext.getValor();
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -187,8 +187,8 @@ public class Board extends Group {
 						if (!objNext.justChanged && !obj.justChanged) {
 							i.remove();
 							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+							objNext.setValor(objNext.getValor() * 3);
+							score += objNext.getValor();
 							objNext.justChanged = true;
 							didMovePieza = true;
 							continue;
@@ -307,7 +307,7 @@ public class Board extends Group {
 		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPiezas);
 		while (ite.hasNext()) {
 			Piece obj = ite.next();
-			if (obj.getValor() >= 2000)// si hay una pieza que valga mas de 15 mil se gana
+			if (obj.getValor() >= 177147)// si hay una pieza que valga mas de 15 mil se gana
 				return true;
 		}
 		return false;
