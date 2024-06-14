@@ -61,7 +61,20 @@ public class Board extends Group {
 			num = MathUtils.random(15);
 			vacio = checarEspacioVacio(num);
 		}
-		int valor = MathUtils.random(1) == 0 ? 2 : 4;// Las valor inicial puede ser 2 o 4
+        int randomValue = MathUtils.random(99);
+
+        // 확률에 따른 값 할당
+        int valor;
+        if (randomValue < 45) {
+            valor = 2; // 45% 확률
+        } else if (randomValue < 90) {
+            valor = 4; // 45% 확률
+        } else if (randomValue < 95) {
+            valor = -1; // 5% 확률
+        } else {
+            valor = -2; // 5% 확률
+        }
+
 		Piece obj = new Piece(num, valor);
 		arrPiezas.add(obj);
 		addActor(obj);
@@ -107,11 +120,30 @@ public class Board extends Group {
 					if (checarMergeUp(obj.posicion, nextPos)) {
 						Piece objNext = getPiezaEnPos(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							i.remove();
-							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
-							objNext.justChanged = true;
+							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+								i.remove();
+								arrPiezas.removeValue(objNext, true);
+								removePieza(objNext);
+								removePieza(obj);
+							} else if (obj.getValor() == -2) {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							} else if (objNext.getValor() == -2) {
+								i.remove();
+								removePieza(objNext);
+								obj.setValor(obj.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								obj.justChanged = true;
+							} else {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							}
 							didMovePieza = true;
 							continue;
 						}
@@ -123,6 +155,7 @@ public class Board extends Group {
 				}
 			}
 		}
+
 		else if (moveDown) {
 			for (int con = 0; con < 4; con++) {
 				Iterator<Piece> i = arrPiezas.iterator();
@@ -133,11 +166,30 @@ public class Board extends Group {
 					if (checarMergeUp(obj.posicion, nextPos)) {
 						Piece objNext = getPiezaEnPos(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							i.remove();
-							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
-							objNext.justChanged = true;
+							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+								i.remove();
+								arrPiezas.removeValue(objNext, true);
+								removePieza(objNext);
+								removePieza(obj);
+							} else if (obj.getValor() == -2) {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							} else if (objNext.getValor() == -2) {
+								i.remove();
+								removePieza(objNext);
+								obj.setValor(obj.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								obj.justChanged = true;
+							} else {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							}
 							didMovePieza = true;
 							continue;
 						}
@@ -149,6 +201,7 @@ public class Board extends Group {
 				}
 			}
 		}
+
 		else if (moveLeft) {
 			for (int con = 0; con < 4; con++) {
 				Iterator<Piece> i = arrPiezas.iterator();
@@ -159,11 +212,30 @@ public class Board extends Group {
 					if (checarMergeSides(obj.posicion, nextPos)) {
 						Piece objNext = getPiezaEnPos(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							i.remove();
-							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
-							objNext.justChanged = true;
+							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+								i.remove();
+								arrPiezas.removeValue(objNext, true);
+								removePieza(objNext);
+								removePieza(obj);
+							} else if (obj.getValor() == -2) {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							} else if (objNext.getValor() == -2) {
+								i.remove();
+								removePieza(objNext);
+								obj.setValor(obj.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								obj.justChanged = true;
+							} else {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							}
 							didMovePieza = true;
 							continue;
 						}
@@ -175,7 +247,9 @@ public class Board extends Group {
 				}
 			}
 		}
-		else if (moveRight) {
+
+
+				else if (moveRight) {
 			for (int con = 0; con < 4; con++) {
 				Iterator<Piece> i = arrPiezas.iterator();
 				while (i.hasNext()) {
@@ -185,11 +259,30 @@ public class Board extends Group {
 					if (checarMergeSides(obj.posicion, nextPos)) {
 						Piece objNext = getPiezaEnPos(nextPos);
 						if (!objNext.justChanged && !obj.justChanged) {
-							i.remove();
-							removePieza(obj);
-							objNext.setValor(objNext.getValor() * 2);
-							score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
-							objNext.justChanged = true;
+							if (obj.getValor() == -1 || objNext.getValor() == -1) {
+								i.remove();
+								arrPiezas.removeValue(objNext, true);
+								removePieza(objNext);
+								removePieza(obj);
+							} else if (obj.getValor() == -2) {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							} else if (objNext.getValor() == -2) {
+								i.remove();
+								removePieza(objNext);
+								obj.setValor(obj.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(obj.getValor()) / Math.log(2));
+								obj.justChanged = true;
+							} else {
+								i.remove();
+								removePieza(obj);
+								objNext.setValor(objNext.getValor() * 2);
+								score += (int) Math.pow(3, Math.log(objNext.getValor()) / Math.log(2));
+								objNext.justChanged = true;
+							}
 							didMovePieza = true;
 							continue;
 						}
@@ -201,6 +294,7 @@ public class Board extends Group {
 				}
 			}
 		}
+
 
 		if (didWin()) {
 			state = STATE_NO_MORE_MOVES;
@@ -232,7 +326,7 @@ public class Board extends Group {
 
 		if (obj1 == null || obj2 == null)
 			return false;
-		else if (obj1.getValor() != obj2.getValor())
+		else if ((obj1.getValor() != obj2.getValor() && obj1.getValor() != -1 && obj2.getValor() != -1 && obj1.getValor() != -2 && obj2.getValor() != -2))
 			return false;
 		else
 			return true;
@@ -246,7 +340,7 @@ public class Board extends Group {
 
 		if (obj1 == null || obj2 == null)
 			return false;
-		else if (obj1.getValor() != obj2.getValor())
+		else if ((obj1.getValor() != obj2.getValor() && obj1.getValor() != -1 && obj2.getValor() != -1 && obj1.getValor() != -2 && obj2.getValor() != -2))
 			return false;
 		else
 			return true;

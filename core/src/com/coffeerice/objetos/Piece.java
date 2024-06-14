@@ -101,6 +101,13 @@ public class Piece extends Actor {
 		case 2048:
 			keyframe = Assets.piece177147;
 			break;
+		case -1:
+			keyframe = Assets.piece177147;
+			break;
+		case -2:
+			keyframe = Assets.piece59049;
+			break;
+
 		}
 
 	}
