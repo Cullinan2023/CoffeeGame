@@ -68,39 +68,46 @@ public class Piece extends Actor {
 		case 0:
 			keyframe = Assets.pieceEmpty;
 			break;
-		case 3:
+		case 2:
 			keyframe = Assets.piece3;
 			break;
-		case 9:
+		case 4:
 			keyframe = Assets.piece9;
 			break;
-		case 27:
+		case 8:
 			keyframe = Assets.piece27;
 			break;
-		case 81:
+		case 16:
 			keyframe = Assets.piece81;
 			break;
-		case 243:
+		case 32:
 			keyframe = Assets.piece243;
 			break;
-		case 729:
+		case 64:
 			keyframe = Assets.piece729;
 			break;
-		case 2187:
+		case 128:
 			keyframe = Assets.piece2187;
 			break;
-		case 6561:
+		case 256:
 			keyframe = Assets.piece6561;
 			break;
-		case 19683:
+		case 512:
 			keyframe = Assets.piece19683;
 			break;
-		case 59049:
+		case 1024:
 			keyframe = Assets.piece59049;
 			break;
-		case 177147:
+		case 2048:
 			keyframe = Assets.piece177147;
 			break;
+		case -1:
+			keyframe = Assets.piece177147;
+			break;
+		case -2:
+			keyframe = Assets.piece59049;
+			break;
+
 		}
 
 	}
