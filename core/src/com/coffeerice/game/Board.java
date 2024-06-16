@@ -65,9 +65,9 @@ public class Board extends Group {
         // 확률에 따른 값 할당
         int valor;
         if (randomValue < 45) {
-            valor = 2; // 45% 확률
+            valor = 3; // 45% 확률
         } else if (randomValue < 90) {
-            valor = 4; // 45% 확률
+            valor = 9; // 45% 확률
         } else if (randomValue < 95) {
             valor = -1; // 5% 확률
         } else {
@@ -127,20 +127,20 @@ public class Board extends Group {
 							} else if (obj.getValue() == -2) {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							} else if (objNext.getValue() == -2) {
 								i.remove();
 								removePiece(objNext);
-								obj.setValue(obj.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
+								obj.setValue(obj.getValue() * 3);
+								score += obj.getValue();
 								obj.justChanged = true;
 							} else {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							}
 							didMovePiece = true;
@@ -172,20 +172,20 @@ public class Board extends Group {
 							} else if (obj.getValue() == -2) {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							} else if (objNext.getValue() == -2) {
 								i.remove();
 								removePiece(objNext);
-								obj.setValue(obj.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
+								obj.setValue(obj.getValue() * 3);
+								score += obj.getValue();
 								obj.justChanged = true;
 							} else {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							}
 							didMergePiece = true;
@@ -218,20 +218,20 @@ public class Board extends Group {
 							} else if (obj.getValue() == -2) {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							} else if (objNext.getValue() == -2) {
 								i.remove();
 								removePiece(objNext);
-								obj.setValue(obj.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
+								obj.setValue(obj.getValue() * 3);
+								score += obj.getValue();
 								obj.justChanged = true;
 							} else {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							}
 							didMergePiece = true;
@@ -265,20 +265,20 @@ public class Board extends Group {
 							} else if (obj.getValue() == -2) {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							} else if (objNext.getValue() == -2) {
 								i.remove();
 								removePiece(objNext);
-								obj.setValue(obj.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(obj.getValue()) / Math.log(2));
+								obj.setValue(obj.getValue() * 3);
+								score += obj.getValue();
 								obj.justChanged = true;
 							} else {
 								i.remove();
 								removePiece(obj);
-								objNext.setValue(objNext.getValue() * 2);
-								score += (int) Math.pow(3, Math.log(objNext.getValue()) / Math.log(2));
+								objNext.setValue(objNext.getValue() * 3);
+								score += objNext.getValue();
 								objNext.justChanged = true;
 							}
 							didMovePiece = true;
@@ -403,7 +403,7 @@ public class Board extends Group {
 		ArrayIterator<Piece> ite = new ArrayIterator<Piece>(arrPieces);
 		while (ite.hasNext()) {
 			Piece obj = ite.next();
-			if (obj.getValue() >= 2000)// si hay una pieza que valga mas de 15 mil se gana
+			if (obj.getValue() >= 177140)// si hay una pieza que valga mas de 15 mil se gana
 				return true;
 		}
 		return false;
